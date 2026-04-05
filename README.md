@@ -4,7 +4,7 @@ A gamified personal planner with a dark pink "mission control" aesthetic. Built 
 
 ## Live Links
 
-- **Vercel**: [https://my-planner-nine-rho.vercel.app](https://my-planner-nine-rho.vercel.app)
+- **Vercel**: [https://my-planner-chi.vercel.app](https://my-planner-chi.vercel.app)
 - **GitHub**: [https://github.com/aanchal-mpcs/my-planner](https://github.com/aanchal-mpcs/my-planner)
 
 ## Reflection Questions
