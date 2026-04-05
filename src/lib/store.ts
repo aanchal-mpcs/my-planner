@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Category, Task, UserStats } from "./types";
+import { Category, Invitee, Task, UserStats } from "./types";
 import {
   DEFAULT_CATEGORIES,
   calculateStreak,
@@ -21,10 +21,10 @@ interface PlannerActions {
   setSelectedDate: (date: string) => void;
   setCurrentMonth: (year: number, month: number) => void;
   navigateMonth: (delta: number) => void;
-  addTask: (title: string, categoryId: string) => void;
+  addTask: (title: string, categoryId: string, opts?: { location?: string; time?: string; invitees?: Invitee[] }) => void;
   toggleTask: (taskId: string) => void;
   deleteTask: (taskId: string) => void;
-  editTask: (taskId: string, updates: Partial<Pick<Task, "title" | "categoryId" | "dueDate">>) => void;
+  editTask: (taskId: string, updates: Partial<Pick<Task, "title" | "categoryId" | "dueDate" | "location" | "time" | "invitees">>) => void;
   addCategory: (name: string, color: string) => void;
   deleteCategory: (categoryId: string) => void;
   recalculateStreak: () => void;
@@ -61,7 +61,7 @@ export const usePlannerStore = create<Store>()(
           };
         }),
 
-      addTask: (title, categoryId) =>
+      addTask: (title, categoryId, opts) =>
         set((state) => ({
           tasks: [
             ...state.tasks,
@@ -72,6 +72,9 @@ export const usePlannerStore = create<Store>()(
               dueDate: state.selectedDate,
               completed: false,
               createdAt: new Date().toISOString(),
+              ...(opts?.location && { location: opts.location }),
+              ...(opts?.time && { time: opts.time }),
+              ...(opts?.invitees?.length && { invitees: opts.invitees }),
             },
           ],
         })),

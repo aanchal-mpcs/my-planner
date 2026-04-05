@@ -7,6 +7,13 @@ export interface Category {
   color: string;
 }
 
+export interface Invitee {
+  id: string;
+  name: string;
+  contact: string;
+  type: "phone" | "email";
+}
+
 export interface Task {
   id: TaskId;
   title: string;
@@ -15,6 +22,9 @@ export interface Task {
   completed: boolean;
   createdAt: string;
   completedAt?: string;
+  location?: string;
+  time?: string; // "HH:MM"
+  invitees?: Invitee[];
 }
 
 export interface UserStats {
