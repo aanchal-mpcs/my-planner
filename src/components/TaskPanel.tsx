@@ -32,13 +32,13 @@ function CompletionRing({ completed, total }: { completed: number; total: number
             cy="26"
             r={radius}
             fill="none"
-            stroke={isComplete ? "#76ff03" : "#00e5ff"}
+            stroke={isComplete ? "#86efac" : "#f472b6"}
             strokeWidth="3"
             strokeLinecap="round"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
             className={`transition-all duration-500 ${isComplete ? "animate-pulse-glow" : ""}`}
-            style={isComplete ? { filter: "drop-shadow(0 0 4px rgba(118, 255, 3, 0.4))" } : {}}
+            style={isComplete ? { filter: "drop-shadow(0 0 4px rgba(134, 239, 172, 0.4))" } : {}}
           />
         )}
       </svg>

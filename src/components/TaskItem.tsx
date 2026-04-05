@@ -43,7 +43,7 @@ export default function TaskItem({ task }: TaskItemProps) {
         >
           {task.completed && (
             <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-              <path d="M2 6L5 9L10 3" stroke="#0a0e17" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M2 6L5 9L10 3" stroke="#150a12" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           )}
         </button>

@@ -73,10 +73,10 @@ export default function WeekPage() {
                       className="h-full rounded-full transition-all duration-500"
                       style={{
                         width: `${pct}%`,
-                        backgroundColor: allDone ? "#76ff03" : "#00e5ff",
+                        backgroundColor: allDone ? "#86efac" : "#f472b6",
                         boxShadow: allDone
-                          ? "0 0 6px rgba(118,255,3,0.3)"
-                          : "0 0 4px rgba(0,229,255,0.2)",
+                          ? "0 0 6px rgba(134,239,172,0.3)"
+                          : "0 0 4px rgba(244,114,182,0.2)",
                       }}
                     />
                   </div>

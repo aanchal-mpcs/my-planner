@@ -1,11 +1,11 @@
 import { Category, Task } from "./types";
 
 export const DEFAULT_CATEGORIES: Category[] = [
-  { id: "cat-work", name: "Work", color: "#00e5ff" },
-  { id: "cat-personal", name: "Personal", color: "#76ff03" },
-  { id: "cat-health", name: "Health", color: "#ff6e40" },
-  { id: "cat-learning", name: "Learning", color: "#e040fb" },
-  { id: "cat-errands", name: "Errands", color: "#ffd740" },
+  { id: "cat-work", name: "Work", color: "#f472b6" },
+  { id: "cat-personal", name: "Personal", color: "#86efac" },
+  { id: "cat-health", name: "Health", color: "#fdba74" },
+  { id: "cat-learning", name: "Learning", color: "#c084fc" },
+  { id: "cat-errands", name: "Errands", color: "#fcd34d" },
 ];
 
 export function generateId(): string {

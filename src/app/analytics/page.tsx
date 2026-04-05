@@ -108,11 +108,11 @@ export default function AnalyticsPage() {
                         className="absolute bottom-0 w-full rounded-t-sm"
                         style={{
                           height: `${(day.completed / day.total) * 100}%`,
-                          backgroundColor: day.completed === day.total ? "#76ff03" : "#00e5ff",
+                          backgroundColor: day.completed === day.total ? "#86efac" : "#f472b6",
                           boxShadow:
                             day.completed === day.total
-                              ? "0 0 4px rgba(118,255,3,0.3)"
-                              : "0 0 4px rgba(0,229,255,0.2)",
+                              ? "0 0 4px rgba(134,239,172,0.3)"
+                              : "0 0 4px rgba(244,114,182,0.2)",
                         }}
                       />
                     )}
@@ -178,7 +178,7 @@ export default function AnalyticsPage() {
                     style={{
                       height: `${(count / maxDayCount) * 100}%`,
                       minHeight: count > 0 ? "4px" : "0",
-                      boxShadow: "0 0 4px rgba(0,229,255,0.15)",
+                      boxShadow: "0 0 4px rgba(244,114,182,0.15)",
                     }}
                   />
                 </div>

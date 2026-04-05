@@ -121,7 +121,7 @@ export default function Dashboard() {
             <div className="h-2 bg-bg-tertiary rounded-full overflow-hidden">
               <div
                 className="h-full bg-accent rounded-full transition-all duration-500"
-                style={{ width: `${xpProgress}%`, boxShadow: "0 0 6px rgba(0, 229, 255, 0.3)" }}
+                style={{ width: `${xpProgress}%`, boxShadow: "0 0 6px rgba(244, 114, 182, 0.3)" }}
               />
             </div>
             <p className="text-[10px] text-text-dim font-mono mt-1.5 text-right">{xpProgress}/100 to next level</p>

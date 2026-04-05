@@ -94,7 +94,7 @@ export default function FocusPage() {
     ? categories.find((c) => c.id === selectedTask.categoryId)
     : null;
   const ringColor =
-    timerState === "break" ? "#76ff03" : selectedCategory?.color || "#00e5ff";
+    timerState === "break" ? "#86efac" : selectedCategory?.color || "#f472b6";
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-6">

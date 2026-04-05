@@ -4,14 +4,14 @@ import { useState } from "react";
 import { usePlannerStore } from "@/lib/store";
 
 const PRESET_COLORS = [
-  "#00e5ff", // cyan
-  "#76ff03", // green
-  "#ff6e40", // orange
-  "#e040fb", // purple
-  "#ffd740", // amber
-  "#ff5252", // red
-  "#448aff", // blue
-  "#b388ff", // lavender
+  "#f472b6", // pink
+  "#86efac", // green
+  "#fdba74", // orange
+  "#c084fc", // purple
+  "#fcd34d", // amber
+  "#fb7185", // rose
+  "#a78bfa", // violet
+  "#f9a8d4", // light pink
 ];
 
 interface CategoryManagerProps {
