@@ -27,9 +27,17 @@ export interface Task {
   invitees?: Invitee[];
 }
 
+export interface FocusSession {
+  id: string;
+  taskId: TaskId;
+  duration: number; // minutes
+  completedAt: string; // ISO datetime
+}
+
 export interface UserStats {
   xp: number;
   currentStreak: number;
   longestStreak: number;
   totalCompleted: number;
+  focusSessions: FocusSession[];
 }

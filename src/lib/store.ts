@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { Category, Invitee, Task, UserStats } from "./types";
+import { Category, FocusSession, Invitee, Task, UserStats } from "./types";
 import {
   DEFAULT_CATEGORIES,
   calculateStreak,
@@ -27,6 +26,7 @@ interface PlannerActions {
   editTask: (taskId: string, updates: Partial<Pick<Task, "title" | "categoryId" | "dueDate" | "location" | "time" | "invitees">>) => void;
   addCategory: (name: string, color: string) => void;
   deleteCategory: (categoryId: string) => void;
+  addFocusSession: (taskId: string, duration: number) => void;
   recalculateStreak: () => void;
 }
 
@@ -37,11 +37,10 @@ const now = new Date();
 const initialMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
 
 export const usePlannerStore = create<Store>()(
-  persist(
     (set, get) => ({
       tasks: [],
       categories: DEFAULT_CATEGORIES,
-      stats: { xp: 0, currentStreak: 0, longestStreak: 0, totalCompleted: 0 },
+      stats: { xp: 0, currentStreak: 0, longestStreak: 0, totalCompleted: 0, focusSessions: [] },
       selectedDate: today,
       currentMonth: initialMonth,
 
@@ -115,6 +114,7 @@ export const usePlannerStore = create<Store>()(
           return {
             tasks: updatedTasks,
             stats: {
+              ...state.stats,
               xp: newXp,
               currentStreak: current,
               longestStreak: Math.max(longest, state.stats.longestStreak),
@@ -155,6 +155,7 @@ export const usePlannerStore = create<Store>()(
           return {
             tasks: updatedTasks,
             stats: {
+              ...state.stats,
               xp: newXp,
               currentStreak: current,
               longestStreak: Math.max(longest, state.stats.longestStreak),
@@ -183,6 +184,23 @@ export const usePlannerStore = create<Store>()(
           categories: state.categories.filter((c) => c.id !== categoryId),
         })),
 
+      addFocusSession: (taskId, duration) =>
+        set((state) => {
+          const session: FocusSession = {
+            id: generateId(),
+            taskId,
+            duration,
+            completedAt: new Date().toISOString(),
+          };
+          return {
+            stats: {
+              ...state.stats,
+              xp: state.stats.xp + 25,
+              focusSessions: [...(state.stats.focusSessions || []), session],
+            },
+          };
+        }),
+
       recalculateStreak: () =>
         set((state) => {
           const { current, longest } = calculateStreak(state.tasks);
@@ -194,11 +212,7 @@ export const usePlannerStore = create<Store>()(
             },
           };
         }),
-    }),
-    {
-      name: "mission-control-planner",
-    }
-  )
+    })
 );
 
 // Helper selectors
