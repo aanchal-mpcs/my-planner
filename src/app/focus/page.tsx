@@ -9,6 +9,14 @@ const BREAK_DURATION = 5 * 60; // 5 minutes
 
 type TimerState = "idle" | "focus" | "break";
 
+function ConfettiBurst() {
+  return (
+    <div className="confetti-burst">
+      <span /><span /><span /><span /><span /><span />
+    </div>
+  );
+}
+
 export default function FocusPage() {
   const tasks = usePlannerStore((s) => s.tasks);
   const addFocusSession = usePlannerStore((s) => s.addFocusSession);
@@ -19,6 +27,9 @@ export default function FocusPage() {
   const [timerState, setTimerState] = useState<TimerState>("idle");
   const [secondsLeft, setSecondsLeft] = useState(FOCUS_DURATION);
   const [sessionsCompleted, setSessionsCompleted] = useState(0);
+  const [showComplete, setShowComplete] = useState(false);
+  const [showXpFloat, setShowXpFloat] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const todayStr = formatDate(new Date());
@@ -45,6 +56,13 @@ export default function FocusPage() {
         addFocusSession(selectedTaskId, 25);
       }
       setSessionsCompleted((s) => s + 1);
+      // Trigger celebration animations
+      setShowComplete(true);
+      setShowXpFloat(true);
+      setShowConfetti(true);
+      setTimeout(() => setShowComplete(false), 1000);
+      setTimeout(() => setShowXpFloat(false), 800);
+      setTimeout(() => setShowConfetti(false), 700);
       setTimerState("break");
       setSecondsLeft(BREAK_DURATION);
     } else if (secondsLeft <= 0 && timerState === "break") {
@@ -99,7 +117,13 @@ export default function FocusPage() {
   return (
     <div className="flex flex-col items-center justify-center h-full p-6">
       {/* Timer ring */}
-      <div className="relative mb-8">
+      <div className={`relative mb-8 ${showComplete ? "animate-focus-complete" : ""}`}>
+        {showConfetti && <ConfettiBurst />}
+        {showXpFloat && (
+          <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-10 animate-xp-float">
+            <span className="text-sm font-mono font-bold text-success">+25 XP</span>
+          </div>
+        )}
         <svg width="280" height="280" className="-rotate-90">
           <circle
             cx="140"
@@ -186,7 +210,7 @@ export default function FocusPage() {
           <button
             onClick={startFocus}
             disabled={!selectedTaskId}
-            className="px-8 py-3 text-sm font-mono font-bold text-bg-primary bg-accent rounded-lg hover:bg-accent/90 disabled:opacity-30 disabled:cursor-not-allowed transition-colors glow-md"
+            className="px-8 py-3 text-sm font-mono font-bold text-bg-primary bg-accent rounded-lg hover:bg-accent/90 disabled:opacity-30 disabled:cursor-not-allowed transition-colors glow-md btn-squish"
           >
             START FOCUS
           </button>

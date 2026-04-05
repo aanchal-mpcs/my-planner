@@ -112,7 +112,7 @@ export default function TaskForm() {
         <button
           type="submit"
           disabled={!title.trim()}
-          className="px-3 py-2 text-xs font-mono font-medium bg-accent/15 text-accent rounded-lg border border-accent/30 hover:bg-accent/25 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+          className="px-3 py-2 text-xs font-mono font-medium bg-accent/15 text-accent rounded-lg border border-accent/30 hover:bg-accent/25 disabled:opacity-30 disabled:cursor-not-allowed transition-colors btn-squish"
         >
           ADD
         </button>

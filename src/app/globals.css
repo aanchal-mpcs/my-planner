@@ -60,7 +60,7 @@ body {
 }
 
 @keyframes flash-green {
-  0% { background-color: rgba(118, 255, 3, 0.2); }
+  0% { background-color: rgba(134, 239, 172, 0.2); }
   100% { background-color: transparent; }
 }
 
@@ -72,6 +72,234 @@ body {
   text-decoration: line-through;
   opacity: 0.5;
   transition: opacity 0.3s ease;
+}
+
+/* ========== ANIMATION SYSTEM ========== */
+
+/* Spring easing for bouncy pops */
+:root {
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --- Task Lifecycle --- */
+
+@keyframes slide-in-right {
+  0% { opacity: 0; transform: translateX(30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+.animate-slide-in {
+  animation: slide-in-right 400ms var(--ease-spring) both;
+}
+
+@keyframes slide-out-left {
+  0% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-40px); }
+}
+.animate-slide-out {
+  animation: slide-out-left 350ms ease-in both;
+}
+
+@keyframes check-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.4); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+.animate-check-pop {
+  animation: check-pop 400ms var(--ease-spring);
+}
+
+@keyframes strike-sweep {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+/* --- Confetti Burst --- */
+
+.confetti-burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.confetti-burst span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation-fill-mode: forwards;
+}
+
+@keyframes confetti-1 {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-30px, -50px) rotate(200deg); }
+}
+@keyframes confetti-2 {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  100% { opacity: 0; transform: translate(25px, -55px) rotate(-180deg); }
+}
+@keyframes confetti-3 {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-40px, -20px) rotate(160deg); }
+}
+@keyframes confetti-4 {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  100% { opacity: 0; transform: translate(35px, -30px) rotate(-220deg); }
+}
+@keyframes confetti-5 {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  100% { opacity: 0; transform: translate(-15px, -60px) rotate(140deg); }
+}
+@keyframes confetti-6 {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  100% { opacity: 0; transform: translate(10px, -65px) rotate(-160deg); }
+}
+
+.confetti-burst span:nth-child(1) { background: #f472b6; animation: confetti-1 600ms ease-out forwards; }
+.confetti-burst span:nth-child(2) { background: #86efac; animation: confetti-2 600ms ease-out 30ms forwards; }
+.confetti-burst span:nth-child(3) { background: #fcd34d; animation: confetti-3 600ms ease-out 60ms forwards; }
+.confetti-burst span:nth-child(4) { background: #c084fc; animation: confetti-4 600ms ease-out 90ms forwards; }
+.confetti-burst span:nth-child(5) { background: #fdba74; animation: confetti-5 600ms ease-out 120ms forwards; }
+.confetti-burst span:nth-child(6) { background: #fb7185; animation: confetti-6 600ms ease-out 50ms forwards; }
+
+/* --- Ring Expand (halo) --- */
+
+@keyframes ring-expand {
+  0% { transform: scale(0.5); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+.animate-ring-expand {
+  animation: ring-expand 500ms ease-out forwards;
+}
+
+/* --- Cascade Page Entrance --- */
+
+@keyframes cascade-in {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.cascade-enter > * {
+  opacity: 0;
+  animation: cascade-in 350ms ease-out both;
+}
+.cascade-enter > *:nth-child(1) { animation-delay: 0ms; }
+.cascade-enter > *:nth-child(2) { animation-delay: 40ms; }
+.cascade-enter > *:nth-child(3) { animation-delay: 80ms; }
+.cascade-enter > *:nth-child(4) { animation-delay: 120ms; }
+.cascade-enter > *:nth-child(5) { animation-delay: 160ms; }
+.cascade-enter > *:nth-child(6) { animation-delay: 200ms; }
+.cascade-enter > *:nth-child(7) { animation-delay: 240ms; }
+.cascade-enter > *:nth-child(8) { animation-delay: 280ms; }
+.cascade-enter > *:nth-child(9) { animation-delay: 320ms; }
+.cascade-enter > *:nth-child(10) { animation-delay: 360ms; }
+
+/* --- XP & Stats --- */
+
+@keyframes xp-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.animate-xp-shimmer {
+  background-image: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: xp-shimmer 800ms linear;
+}
+
+@keyframes stat-bump {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+.animate-stat-bump {
+  animation: stat-bump 300ms var(--ease-spring);
+}
+
+@keyframes fire-flicker {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.3) rotate(-8deg); }
+  50% { transform: scale(1.1) rotate(6deg); }
+  75% { transform: scale(1.25) rotate(-4deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.animate-fire-flicker {
+  animation: fire-flicker 400ms var(--ease-spring);
+}
+
+/* --- Modal --- */
+
+@keyframes modal-backdrop-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.animate-backdrop-in {
+  animation: modal-backdrop-in 200ms ease-out both;
+}
+
+@keyframes modal-in {
+  0% { opacity: 0; transform: scale(0.9) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-modal-in {
+  animation: modal-in 250ms var(--ease-spring) both;
+}
+
+/* --- Button Squish --- */
+
+.btn-squish:active {
+  transform: scale(0.92);
+  transition: transform 100ms ease-out;
+}
+
+/* --- Focus Timer --- */
+
+@keyframes focus-complete-pulse {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(134, 239, 172, 0.2)); }
+  33% { filter: drop-shadow(0 0 16px rgba(134, 239, 172, 0.6)); }
+  66% { filter: drop-shadow(0 0 8px rgba(134, 239, 172, 0.3)); }
+}
+.animate-focus-complete {
+  animation: focus-complete-pulse 1000ms ease-in-out;
+}
+
+@keyframes xp-float {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-40px); }
+}
+.animate-xp-float {
+  animation: xp-float 800ms ease-out forwards;
+}
+
+/* --- Wiggle (icon hover) --- */
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-6deg); }
+  75% { transform: rotate(6deg); }
+}
+.animate-wiggle {
+  animation: wiggle 300ms ease-in-out;
+}
+
+/* --- Level Up Overlay --- */
+
+@keyframes level-up-entrance {
+  0% { opacity: 0; transform: scale(0.5); }
+  60% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.animate-level-up {
+  animation: level-up-entrance 500ms var(--ease-spring) both;
+}
+
+@keyframes level-up-exit {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+.animate-level-up-exit {
+  animation: level-up-exit 400ms ease-in both;
 }
 
 /* Scrollbar */

@@ -33,8 +33,8 @@ export default function CategoryManager({ onClose }: CategoryManagerProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-sm bg-bg-secondary border border-border rounded-xl p-6 glow-md">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-backdrop-in">
+      <div className="w-full max-w-sm bg-bg-secondary border border-border rounded-xl p-6 glow-md animate-modal-in">
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <h3 className="text-lg font-semibold text-text-primary">Categories</h3>

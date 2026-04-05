@@ -42,13 +42,13 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
+              className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 isActive
                   ? "bg-accent/10 text-accent border border-accent/20 glow-sm"
                   : "text-text-secondary hover:text-text-primary hover:bg-bg-hover border border-transparent"
               }`}
             >
-              <span className={`text-base font-mono ${isActive ? "text-accent" : "text-text-dim"}`}>
+              <span className={`text-base font-mono transition-transform ${isActive ? "text-accent animate-wiggle" : "text-text-dim group-hover:scale-125"}`}>
                 {item.icon}
               </span>
               {item.label}

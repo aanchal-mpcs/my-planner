@@ -1,9 +1,18 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import { usePlannerStore } from "@/lib/store";
 import { formatDisplayDate } from "@/lib/utils";
 import TaskItem from "./TaskItem";
 import TaskForm from "./TaskForm";
+
+function ConfettiBurst() {
+  return (
+    <div className="confetti-burst">
+      <span /><span /><span /><span /><span /><span />
+    </div>
+  );
+}
 
 function CompletionRing({ completed, total }: { completed: number; total: number }) {
   const pct = total === 0 ? 0 : completed / total;
@@ -11,6 +20,20 @@ function CompletionRing({ completed, total }: { completed: number; total: number
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - pct);
   const isComplete = pct === 1 && total > 0;
+
+  const prevComplete = useRef(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showRing, setShowRing] = useState(false);
+
+  useEffect(() => {
+    if (isComplete && !prevComplete.current) {
+      setShowConfetti(true);
+      setShowRing(true);
+      setTimeout(() => setShowConfetti(false), 700);
+      setTimeout(() => setShowRing(false), 500);
+    }
+    prevComplete.current = isComplete;
+  }, [isComplete]);
 
   return (
     <div className="relative flex items-center justify-center">
@@ -45,6 +68,10 @@ function CompletionRing({ completed, total }: { completed: number; total: number
       <span className={`absolute text-xs font-mono ${isComplete ? "text-success" : "text-text-secondary"}`}>
         {total === 0 ? "--" : `${completed}/${total}`}
       </span>
+      {showRing && (
+        <div className="absolute w-12 h-12 rounded-full border-2 border-success/50 animate-ring-expand" />
+      )}
+      {showConfetti && <ConfettiBurst />}
     </div>
   );
 }

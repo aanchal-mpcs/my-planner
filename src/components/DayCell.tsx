@@ -34,7 +34,7 @@ export default function DayCell({ date, dayNumber, isCurrentMonth, tasks }: DayC
     <button
       onClick={() => setSelectedDate(date)}
       className={`
-        relative flex flex-col items-start p-2 min-h-[5rem] rounded-lg border transition-all duration-150
+        relative flex flex-col items-start p-2 min-h-[5rem] rounded-lg border transition-all duration-150 hover:scale-[1.03]
         ${!isCurrentMonth ? "opacity-30" : ""}
         ${isSelected ? "bg-bg-active border-accent/40" : "border-transparent hover:bg-bg-hover"}
         ${today && !isSelected ? "border-accent/30" : ""}

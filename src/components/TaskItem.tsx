@@ -1,12 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Task } from "@/lib/types";
 import { usePlannerStore } from "@/lib/store";
 import { formatDisplayDate } from "@/lib/utils";
 
 interface TaskItemProps {
   task: Task;
+}
+
+function ConfettiBurst() {
+  return (
+    <div className="confetti-burst">
+      <span /><span /><span /><span /><span /><span />
+    </div>
+  );
 }
 
 function buildInviteMessage(task: Task): string {
@@ -22,6 +30,17 @@ export default function TaskItem({ task }: TaskItemProps) {
   const deleteTask = usePlannerStore((s) => s.deleteTask);
   const categories = usePlannerStore((s) => s.categories);
   const [showInvitees, setShowInvitees] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [checkPop, setCheckPop] = useState(false);
+  const [slidingOut, setSlidingOut] = useState(false);
+  const [isNew, setIsNew] = useState(true);
+  const wasCompleted = useRef(task.completed);
+
+  useEffect(() => {
+    // Clear entrance animation flag after it plays
+    const t = setTimeout(() => setIsNew(false), 450);
+    return () => clearTimeout(t);
+  }, []);
 
   const category = categories.find((c) => c.id === task.categoryId);
   const color = category?.color || "#475569";
@@ -29,24 +48,49 @@ export default function TaskItem({ task }: TaskItemProps) {
 
   const message = buildInviteMessage(task);
 
+  const handleToggle = () => {
+    // Only celebrate when completing, not uncompleting
+    if (!task.completed) {
+      setCheckPop(true);
+      setShowConfetti(true);
+      setTimeout(() => setCheckPop(false), 400);
+      setTimeout(() => setShowConfetti(false), 700);
+    }
+    toggleTask(task.id);
+  };
+
+  const handleDelete = () => {
+    setSlidingOut(true);
+    setTimeout(() => deleteTask(task.id), 350);
+  };
+
   return (
-    <div className="group px-4 py-3 rounded-lg hover:bg-bg-hover transition-colors">
+    <div
+      className={`group px-4 py-3 rounded-lg hover:bg-bg-hover transition-colors ${
+        isNew ? "animate-slide-in" : ""
+      } ${slidingOut ? "animate-slide-out" : ""}`}
+    >
       <div className="flex items-center gap-3">
         {/* Checkbox */}
-        <button
-          onClick={() => toggleTask(task.id)}
-          className="flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all"
-          style={{
-            borderColor: color,
-            backgroundColor: task.completed ? color : "transparent",
-          }}
-        >
-          {task.completed && (
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-              <path d="M2 6L5 9L10 3" stroke="#150a12" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          )}
-        </button>
+        <div className="relative">
+          <button
+            onClick={handleToggle}
+            className={`flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+              checkPop ? "animate-check-pop" : ""
+            }`}
+            style={{
+              borderColor: color,
+              backgroundColor: task.completed ? color : "transparent",
+            }}
+          >
+            {task.completed && (
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6L5 9L10 3" stroke="#150a12" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
+          </button>
+          {showConfetti && <ConfettiBurst />}
+        </div>
 
         {/* Task content */}
         <div className="flex-1 min-w-0">
@@ -90,7 +134,7 @@ export default function TaskItem({ task }: TaskItemProps) {
 
         {/* Delete button */}
         <button
-          onClick={() => deleteTask(task.id)}
+          onClick={handleDelete}
           className="flex-shrink-0 opacity-0 group-hover:opacity-100 text-text-dim hover:text-danger transition-all p-1"
         >
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
